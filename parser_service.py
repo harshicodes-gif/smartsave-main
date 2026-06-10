@@ -1,4 +1,3 @@
-# Statement parser
 def parse_expense(text):
 
     try:
