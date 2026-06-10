@@ -1,55 +1,96 @@
 import streamlit as st
-from budget_service import add_transaction, get_transactions
+import pandas as pd
+import plotly.express as px
+
+from budget_service import (
+    add_transaction,
+    get_transactions
+)
 
 def show_dashboard():
 
-    st.header("💰 Expense Tracker")
+    st.header("📊 Dashboard")
 
-    st.subheader("Add Expense")
+    col1, col2 = st.columns([1,1])
 
-    category = st.selectbox(
-        "Category",
-        ["Food", "Travel", "Entertainment", "Study", "Shopping", "Other"]
-    )
+    with col1:
 
-    amount = st.number_input(
-        "Amount",
-        min_value=0.0
-    )
+        st.subheader("Add Expense")
 
-    description = st.text_input(
-        "Description"
-    )
-
-    if st.button("Add Expense"):
-
-        add_transaction(
-            category,
-            amount,
-            description
+        category = st.selectbox(
+            "Category",
+            [
+                "Food",
+                "Travel",
+                "Entertainment",
+                "Study",
+                "Shopping",
+                "Other"
+            ]
         )
 
-        st.success("Expense Added!")
+        amount = st.number_input(
+            "Amount",
+            min_value=0.0
+        )
 
-    st.divider()
+        description = st.text_input(
+            "Description"
+        )
 
-    st.subheader("Transaction History")
+        if st.button("➕ Add Expense"):
+
+            add_transaction(
+                category,
+                amount,
+                description
+            )
+
+            st.success(
+                "Expense Added Successfully"
+            )
 
     transactions = get_transactions()
 
-    if transactions:
-
-        total = sum(row[2] for row in transactions)
-
-        st.metric(
-            "Total Expenses",
-            f"₹{total:.2f}"
+    if not transactions:
+        st.info(
+            "No expenses added yet."
         )
+        return
 
-        st.dataframe(
-            transactions,
-            use_container_width=True
-        )
+    df = pd.DataFrame(
+        transactions,
+        columns=[
+            "ID",
+            "Category",
+            "Amount",
+            "Description"
+        ]
+    )
 
-    else:
-        st.info("No expenses recorded yet.")
+    total = df["Amount"].sum()
+
+    st.metric(
+        "💸 Total Spending",
+        f"₹{total:.2f}"
+    )
+
+    fig = px.pie(
+        df,
+        names="Category",
+        values="Amount",
+        hole=0.5,
+        title="Expense Breakdown"
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
+
+    st.subheader("Transaction History")
+
+    st.dataframe(
+        df,
+        use_container_width=True
+    )
