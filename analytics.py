@@ -1,9 +1,64 @@
 import streamlit as st
+import pandas as pd
+import plotly.express as px
+
+from budget_service import get_transactions
 
 def show_analytics():
 
-    st.header("Analytics")
+    st.header("📈 Analytics")
 
-    st.info(
-        "Analytics module coming soon."
+    transactions = get_transactions()
+
+    if not transactions:
+
+        st.warning(
+            "No expense data available."
+        )
+
+        return
+
+    df = pd.DataFrame(
+        transactions,
+        columns=[
+            "ID",
+            "Category",
+            "Amount",
+            "Description"
+        ]
+    )
+
+    st.subheader("Category Wise Spending")
+
+    category_summary = (
+        df.groupby("Category")["Amount"]
+        .sum()
+        .reset_index()
+    )
+
+    fig = px.bar(
+        category_summary,
+        x="Category",
+        y="Amount",
+        title="Spending By Category"
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
+
+    highest = category_summary.loc[
+        category_summary["Amount"].idxmax()
+    ]
+
+    st.success(
+        f"Highest spending category: {highest['Category']} (₹{highest['Amount']:.2f})"
+    )
+
+    st.subheader("Detailed Summary")
+
+    st.dataframe(
+        category_summary,
+        use_container_width=True
     )
