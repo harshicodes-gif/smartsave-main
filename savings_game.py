@@ -1,15 +1,31 @@
 import streamlit as st
-from gamification_service import get_level
 
 def show_game():
 
-    st.header("Savings Game")
+    st.header("🎮 Savings Challenge")
 
     saved = st.number_input(
-        "Amount Saved",
+        "How much have you saved?",
         min_value=0.0
     )
 
+    if saved < 1000:
+
+        level = "🥉 Bronze Saver"
+
+    elif saved < 5000:
+
+        level = "🥈 Silver Saver"
+
+    else:
+
+        level = "🏆 Gold Saver"
+
     st.success(
-        get_level(saved)
+        f"Current Level: {level}"
     )
+
+    progress = min(saved / 5000, 1.0)
+
+    st.progress(progress)
+    
