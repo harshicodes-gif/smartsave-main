@@ -1,6 +1,10 @@
 from db import get_connection
 
-def add_transaction(category, amount, description):
+def add_transaction(
+    category,
+    amount,
+    description
+):
 
     conn = get_connection()
     cur = conn.cursor()
@@ -11,7 +15,11 @@ def add_transaction(category, amount, description):
         (category, amount, description)
         VALUES (?, ?, ?)
         """,
-        (category, amount, description)
+        (
+            category,
+            amount,
+            description
+        )
     )
 
     conn.commit()
@@ -20,9 +28,12 @@ def add_transaction(category, amount, description):
 def get_transactions():
 
     conn = get_connection()
+
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM transactions")
+    cur.execute(
+        "SELECT * FROM transactions"
+    )
 
     rows = cur.fetchall()
 
