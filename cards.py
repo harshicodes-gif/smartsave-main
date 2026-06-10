@@ -1,4 +1,3 @@
-# Metric cards
 import streamlit as st
 
 def metric_card(title, value):
