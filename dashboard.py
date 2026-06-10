@@ -1,6 +1,5 @@
-# Dashboard page
 import streamlit as st
-from backend.services.budget_service import get_transactions
+from budget_service import get_transactions
 
 def show_dashboard():
 
@@ -18,5 +17,6 @@ def show_dashboard():
         f"₹{total:.2f}"
     )
 
+    st.subheader("Transactions")
+
     st.write(transactions)
-    
