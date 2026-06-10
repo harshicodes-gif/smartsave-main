@@ -1,4 +1,3 @@
-# Analytics page
 import streamlit as st
 
 def show_analytics():
