@@ -1,5 +1,4 @@
-# Budget engine
-from backend.database.db import get_connection
+from db import get_connection
 
 def add_transaction(category, amount, description):
 
@@ -17,7 +16,6 @@ def add_transaction(category, amount, description):
 
     conn.commit()
     conn.close()
-
 
 def get_transactions():
 
