@@ -1,4 +1,3 @@
-# AI categorizer
 def auto_categorize(text):
 
     text = text.lower()
@@ -6,10 +5,10 @@ def auto_categorize(text):
     if "pizza" in text:
         return "Food"
 
-    if "bus" in text:
+    elif "bus" in text:
         return "Travel"
 
-    if "movie" in text:
+    elif "movie" in text:
         return "Entertainment"
 
     return "Other"
