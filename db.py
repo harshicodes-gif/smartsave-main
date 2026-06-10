@@ -1,4 +1,3 @@
-# Database connection
 import sqlite3
 
 DB_NAME = "smartsave.db"
