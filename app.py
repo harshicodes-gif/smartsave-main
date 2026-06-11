@@ -19,16 +19,29 @@ st.set_page_config(
 if "user" not in st.session_state:
     st.session_state.user = None
 
+if "language" not in st.session_state:
+    st.session_state.language = "English"
+
+if "ai_provider" not in st.session_state:
+    st.session_state.ai_provider = "Ollama (Local)"
+
 if st.session_state.user is None:
 
     st.title("💰 SmartSave")
     st.subheader("Pocket Money Manager for Students")
 
-    tab1, tab2 = st.tabs(["Login", "Register"])
+    tab1, tab2 = st.tabs(
+        [
+            "Login",
+            "Register"
+        ]
+    )
 
     with tab1:
 
-        username = st.text_input("Username")
+        username = st.text_input(
+            "Username"
+        )
 
         password = st.text_input(
             "Password",
@@ -43,10 +56,12 @@ if st.session_state.user is None:
             )
 
             if user:
+
                 st.session_state.user = username
                 st.rerun()
 
             else:
+
                 st.error(
                     "Invalid username or password"
                 )
@@ -85,7 +100,17 @@ st.sidebar.success(
     f"Logged in as: {st.session_state.user}"
 )
 
+st.session_state.language = st.sidebar.selectbox(
+    "🌐 Language",
+    [
+        "English",
+        "Hindi",
+        "Telugu"
+    ]
+)
+
 if st.sidebar.button("Logout"):
+
     st.session_state.user = None
     st.rerun()
 
@@ -101,18 +126,27 @@ menu = st.sidebar.radio(
         "Dashboard",
         "Analytics",
         "AI Coach",
+        "AI Settings",
         "Savings Game"
     ]
 )
 
 if menu == "Dashboard":
+
     show_dashboard()
 
 elif menu == "Analytics":
+
     show_analytics()
 
 elif menu == "AI Coach":
+
     show_ai_coach()
 
+elif menu == "AI Settings":
+
+    show_ai_settings()
+
 elif menu == "Savings Game":
+
     show_game()
