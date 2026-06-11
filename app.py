@@ -2,8 +2,8 @@ import streamlit as st
 
 from db import init_db
 from auth_service import (
-    register_user,
-    login_user
+register_user,
+login_user
 )
 
 from dashboard import show_dashboard
@@ -14,130 +14,139 @@ from savings_game import show_game
 init_db()
 
 st.set_page_config(
-    page_title="SmartSave",
-    page_icon="💰",
-    layout="wide"
+page_title="SmartSave",
+page_icon="💰",
+layout="wide"
 )
 
 if "user" not in st.session_state:
-    st.session_state.user = None
+st.session_state.user = None
 
 if st.session_state.user is None:
 
-    st.markdown("""
-    # 💰 SmartSave
+```
+st.title("💰 SmartSave")
 
-    Pocket Money Manager For Students
-    """)
+st.subheader(
+    "Pocket Money Manager for Students"
+)
 
-    tab1, tab2 = st.tabs(
-        [
-            "Login",
-            "Register"
-        ]
+tab1, tab2 = st.tabs(
+    [
+        "Login",
+        "Register"
+    ]
+)
+
+with tab1:
+
+    username = st.text_input(
+        "Username"
     )
 
-    with tab1:
+    password = st.text_input(
+        "Password",
+        type="password"
+    )
 
-        username = st.text_input(
-            "Username"
+    if st.button("Login"):
+
+        user = login_user(
+            username,
+            password
         )
 
-        password = st.text_input(
-            "Password",
-            type="password"
-        )
+        if user:
 
-        if st.button("Login"):
+            st.session_state.user = username
 
-            user = login_user(
-                username,
-                password
+            st.rerun()
+
+        else:
+
+            st.error(
+                "Invalid username or password"
             )
 
-            if user:
+with tab2:
 
-                st.session_state.user = username
+    new_user = st.text_input(
+        "Create Username"
+    )
 
-                st.rerun()
+    new_pass = st.text_input(
+        "Create Password",
+        type="password"
+    )
 
-            else:
+    if st.button("Register"):
 
-                st.error(
-                    "Invalid credentials"
-                )
+        if register_user(
+            new_user,
+            new_pass
+        ):
 
-    with tab2:
+            st.success(
+                "Account created successfully."
+            )
 
-        new_user = st.text_input(
-            "Create Username"
-        )
+        else:
 
-        new_pass = st.text_input(
-            "Create Password",
-            type="password"
-        )
+            st.error(
+                "Username already exists."
+            )
 
-        if st.button("Register"):
-
-            if register_user(
-                new_user,
-                new_pass
-            ):
-
-                st.success(
-                    "Account created!"
-                )
-
-            else:
-
-                st.error(
-                    "Username already exists"
-                )
-
-    st.stop()
+st.stop()
+```
 
 st.sidebar.success(
-    f"Logged in as {st.session_state.user}"
+f"Logged in as: {st.session_state.user}"
 )
 
 if st.sidebar.button("Logout"):
 
-    st.session_state.user = None
+```
+st.session_state.user = None
 
-    st.rerun()
-
-st.markdown("""
-<style>
-
-.stApp{
-background:#F8F8F4;
-}
-
-</style>
-""",
-unsafe_allow_html=True)
+st.rerun()
+```
 
 st.title("💰 SmartSave")
 
+st.caption(
+"Track expenses, manage pocket money, and build smarter saving habits."
+)
+
 menu = st.sidebar.radio(
-    "Navigation",
-    [
-        "Dashboard",
-        "Analytics",
-        "AI Coach",
-        "Savings Game"
-    ]
+"Navigation",
+[
+"Dashboard",
+"Analytics",
+"AI Coach",
+"Savings Game"
+]
 )
 
 if menu == "Dashboard":
-    show_dashboard()
+
+```
+show_dashboard()
+```
 
 elif menu == "Analytics":
-    show_analytics()
+
+```
+show_analytics()
+```
 
 elif menu == "AI Coach":
-    show_ai_coach()
+
+```
+show_ai_coach()
+```
 
 elif menu == "Savings Game":
-    show_game()
+
+```
+show_game()
+```
