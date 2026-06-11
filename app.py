@@ -6,6 +6,7 @@ from dashboard import show_dashboard
 from analytics import show_analytics
 from ai_coach import show_ai_coach
 from savings_game import show_game
+from ai_settings import show_ai_settings
 
 init_db()
 
