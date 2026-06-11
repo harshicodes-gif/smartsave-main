@@ -47,26 +47,31 @@ def show_ai_coach():
         f"Highest Spending Category: {top_category}"
     )
 
-    if total < 1000:
+   if total < 1000:
 
-        st.success(
-            "Excellent! Your spending is under control."
-        )
+    st.success(
+        """
+        Excellent work.
 
-    elif total < 3000:
+        Your spending is under control.
+        """
+    )
 
-        st.warning(
-            "Try reducing unnecessary purchases."
-        )
+elif total < 3000:
 
-    else:
+    st.warning(
+        """
+        Try reducing non-essential spending
+        by 10%.
+        """
+    )
 
-        st.error(
-            "Your expenses are high. Consider setting a budget."
-        )
+else:
 
-    st.subheader("Recommendation")
+    st.error(
+        """
+        Spending is high.
 
-    st.info(
-        f"Try reducing {top_category} expenses by 10-15% this month."
+        Consider setting weekly limits.
+        """
     )
