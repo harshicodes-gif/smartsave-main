@@ -8,7 +8,9 @@ def show_analytics():
 
     st.header("📈 Analytics")
 
-    transactions = get_transactions()
+    transactions = get_transactions(
+    st.session_state.user
+)
 
     if not transactions:
 
