@@ -6,61 +6,71 @@ from budget_service import get_transactions
 
 def show_analytics():
 
-    st.header("📈 Analytics")
+```
+st.header("📈 Analytics")
 
-    transactions = get_transactions(
+transactions = get_transactions(
     st.session_state.user
 )
 
-    if not transactions:
+if not transactions:
 
-        st.warning(
-            "No expense data available."
-        )
-
-        return
-
-    df = pd.DataFrame(
-        transactions,
-        columns=[
-            "ID",
-            "Category",
-            "Amount",
-            "Description"
-        ]
+    st.warning(
+        "No expense data available."
     )
 
-    st.subheader("Category Wise Spending")
+    return
 
-    category_summary = (
-        df.groupby("Category")["Amount"]
-        .sum()
-        .reset_index()
-    )
-
-    fig = px.bar(
-        category_summary,
-        x="Category",
-        y="Amount",
-        title="Spending By Category"
-    )
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
-
-    highest = category_summary.loc[
-        category_summary["Amount"].idxmax()
+df = pd.DataFrame(
+    transactions,
+    columns=[
+        "ID",
+        "Username",
+        "Category",
+        "Amount",
+        "Description"
     ]
+)
 
-    st.success(
-        f"Highest spending category: {highest['Category']} (₹{highest['Amount']:.2f})"
-    )
+st.subheader("Category Wise Spending")
 
-    st.subheader("Detailed Summary")
+category_summary = (
+    df.groupby("Category")["Amount"]
+    .sum()
+    .reset_index()
+)
 
-    st.dataframe(
-        category_summary,
-        use_container_width=True
-    )
+fig = px.bar(
+    category_summary,
+    x="Category",
+    y="Amount",
+    title="Spending By Category"
+)
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+highest = category_summary.loc[
+    category_summary["Amount"].idxmax()
+]
+
+st.success(
+    f"Highest spending category: {highest['Category']} (₹{highest['Amount']:.2f})"
+)
+
+st.subheader("Detailed Summary")
+
+st.dataframe(
+    category_summary,
+    use_container_width=True
+)
+
+st.subheader("All Transactions")
+
+st.dataframe(
+    df,
+    use_container_width=True
+)
+```
