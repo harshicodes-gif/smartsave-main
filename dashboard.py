@@ -9,59 +9,66 @@ from budget_service import (
 
 def show_dashboard():
 
+    username = st.session_state.user
+
     st.header("📊 Dashboard")
 
-    col1, col2 = st.columns([1,1])
+    pocket_money = st.number_input(
+        "Monthly Pocket Money",
+        value=5000.0
+    )
 
-    with col1:
+    category = st.selectbox(
+        "Category",
+        [
+            "Food",
+            "Travel",
+            "Entertainment",
+            "Study",
+            "Shopping",
+            "Other"
+        ]
+    )
 
-        st.subheader("Add Expense")
+    amount = st.number_input(
+        "Amount",
+        min_value=0.0
+    )
 
-        category = st.selectbox(
-            "Category",
-            [
-                "Food",
-                "Travel",
-                "Entertainment",
-                "Study",
-                "Shopping",
-                "Other"
-            ]
+    description = st.text_input(
+        "Description"
+    )
+
+    if st.button("➕ Add Expense"):
+
+        add_transaction(
+            username,
+            category,
+            amount,
+            description
         )
 
-        amount = st.number_input(
-            "Amount",
-            min_value=0.0
+        st.success(
+            "Expense Added"
         )
 
-        description = st.text_input(
-            "Description"
-        )
-
-        if st.button("➕ Add Expense"):
-
-            add_transaction(
-                category,
-                amount,
-                description
-            )
-
-            st.success(
-                "Expense Added Successfully"
-            )
-
-    transactions = get_transactions()
+    transactions = get_transactions(
+        username
+    )
 
     if not transactions:
+
         st.info(
-            "No expenses added yet."
+            "No expenses yet."
         )
+
         return
 
     df = pd.DataFrame(
         transactions,
         columns=[
             "ID",
+            "Username",
             "Category",
             "Amount",
             "Description"
@@ -70,25 +77,36 @@ def show_dashboard():
 
     total = df["Amount"].sum()
 
-    st.metric(
-        "💸 Total Spending",
-        f"₹{total:.2f}"
+    balance = pocket_money - total
+
+    c1,c2,c3 = st.columns(3)
+
+    c1.metric(
+        "Pocket Money",
+        f"₹{pocket_money:.0f}"
+    )
+
+    c2.metric(
+        "Spent",
+        f"₹{total:.0f}"
+    )
+
+    c3.metric(
+        "Remaining",
+        f"₹{balance:.0f}"
     )
 
     fig = px.pie(
         df,
         names="Category",
         values="Amount",
-        hole=0.5,
-        title="Expense Breakdown"
+        hole=.6
     )
 
     st.plotly_chart(
         fig,
         use_container_width=True
     )
-
-    st.subheader("Transaction History")
 
     st.dataframe(
         df,
