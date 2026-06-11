@@ -29,57 +29,57 @@ tab1, tab2 = st.tabs(["Login", "Register"])
 
 with tab1:
 
-    username = st.text_input("Username")
-    password = st.text_input(
-        "Password",
-        type="password"
+username = st.text_input("Username")
+password = st.text_input(
+    "Password",
+    type="password"
+)
+
+if st.button("Login"):
+
+    user = login_user(
+        username,
+        password
     )
 
-    if st.button("Login"):
+    if user:
 
-        user = login_user(
-            username,
-            password
+        st.session_state.user = username
+        st.rerun()
+
+    else:
+
+        st.error(
+            "Invalid username or password"
         )
-
-        if user:
-
-            st.session_state.user = username
-            st.rerun()
-
-        else:
-
-            st.error(
-                "Invalid username or password"
-            )
 
 with tab2:
 
-    new_user = st.text_input(
-        "Create Username"
-    )
+new_user = st.text_input(
+    "Create Username"
+)
 
-    new_pass = st.text_input(
-        "Create Password",
-        type="password"
-    )
+new_pass = st.text_input(
+    "Create Password",
+    type="password"
+)
 
-    if st.button("Register"):
+if st.button("Register"):
 
-        if register_user(
-            new_user,
-            new_pass
-        ):
+    if register_user(
+        new_user,
+        new_pass
+    ):
 
-            st.success(
-                "Account created successfully."
-            )
+        st.success(
+            "Account created successfully."
+        )
 
-        else:
+    else:
 
-            st.error(
-                "Username already exists."
-            )
+        st.error(
+            "Username already exists."
+        )
 
 st.stop()
 ```
