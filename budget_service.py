@@ -1,6 +1,7 @@
 from db import get_connection
 
 def add_transaction(
+    username,
     category,
     amount,
     description
@@ -12,10 +13,16 @@ def add_transaction(
     cur.execute(
         """
         INSERT INTO transactions
-        (category, amount, description)
-        VALUES (?, ?, ?)
+        (
+            username,
+            category,
+            amount,
+            description
+        )
+        VALUES(?,?,?,?)
         """,
         (
+            username,
             category,
             amount,
             description
@@ -25,14 +32,19 @@ def add_transaction(
     conn.commit()
     conn.close()
 
-def get_transactions():
+
+def get_transactions(username):
 
     conn = get_connection()
-
     cur = conn.cursor()
 
     cur.execute(
-        "SELECT * FROM transactions"
+        """
+        SELECT *
+        FROM transactions
+        WHERE username=?
+        """,
+        (username,)
     )
 
     rows = cur.fetchall()
