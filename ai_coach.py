@@ -8,8 +8,8 @@ def show_ai_coach():
     st.header("🤖 SmartSave AI Coach")
 
     transactions = get_transactions(
-    st.session_state.user
-)
+        st.session_state.user
+    )
 
     if not transactions:
 
@@ -23,6 +23,7 @@ def show_ai_coach():
         transactions,
         columns=[
             "ID",
+            "Username",
             "Category",
             "Amount",
             "Description"
@@ -47,31 +48,37 @@ def show_ai_coach():
         f"Highest Spending Category: {top_category}"
     )
 
-   if total < 1000:
+    if total < 1000:
 
-    st.success(
-        """
-        Excellent work.
+        st.success(
+            """
+            Excellent work.
 
-        Your spending is under control.
-        """
-    )
+            Your spending is under control.
+            """
+        )
 
-elif total < 3000:
+    elif total < 3000:
 
-    st.warning(
-        """
-        Try reducing non-essential spending
-        by 10%.
-        """
-    )
+        st.warning(
+            """
+            Try reducing non-essential spending
+            by 10%.
+            """
+        )
 
-else:
+    else:
 
-    st.error(
-        """
-        Spending is high.
+        st.error(
+            """
+            Spending is high.
 
-        Consider setting weekly limits.
-        """
+            Consider setting weekly limits.
+            """
+        )
+
+    st.subheader("Recommendation")
+
+    st.info(
+        f"Try reducing {top_category} expenses by 10-15% this month."
     )
