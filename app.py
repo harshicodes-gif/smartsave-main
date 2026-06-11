@@ -1,10 +1,7 @@
 import streamlit as st
 
 from db import init_db
-from auth_service import (
-register_user,
-login_user
-)
+from auth_service import register_user, login_user
 
 from dashboard import show_dashboard
 from analytics import show_analytics
@@ -26,24 +23,13 @@ if st.session_state.user is None:
 
 ```
 st.title("💰 SmartSave")
+st.subheader("Pocket Money Manager for Students")
 
-st.subheader(
-    "Pocket Money Manager for Students"
-)
-
-tab1, tab2 = st.tabs(
-    [
-        "Login",
-        "Register"
-    ]
-)
+tab1, tab2 = st.tabs(["Login", "Register"])
 
 with tab1:
 
-    username = st.text_input(
-        "Username"
-    )
-
+    username = st.text_input("Username")
     password = st.text_input(
         "Password",
         type="password"
@@ -59,7 +45,6 @@ with tab1:
         if user:
 
             st.session_state.user = username
-
             st.rerun()
 
         else:
@@ -107,7 +92,6 @@ if st.sidebar.button("Logout"):
 
 ```
 st.session_state.user = None
-
 st.rerun()
 ```
 
