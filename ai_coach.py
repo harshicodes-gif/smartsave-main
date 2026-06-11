@@ -7,7 +7,9 @@ def show_ai_coach():
 
     st.header("🤖 SmartSave AI Coach")
 
-    transactions = get_transactions()
+    transactions = get_transactions(
+    st.session_state.user
+)
 
     if not transactions:
 
