@@ -7,6 +7,7 @@ from analytics import show_analytics
 from ai_coach import show_ai_coach
 from savings_game import show_game
 from ai_settings import show_ai_settings
+from feedback import show_feedback
 from translations import translations
 
 init_db()
@@ -176,7 +177,8 @@ menu = st.sidebar.radio(
         t["analytics"],
         t["ai_coach"],
         t["ai_settings"],
-        t["savings_game"]
+        t["savings_game"],
+        t["feedback"]
     ]
 )
 
@@ -199,3 +201,7 @@ elif menu == t["ai_settings"]:
 elif menu == t["savings_game"]:
 
     show_game()
+
+elif menu == t["feedback"]:
+
+    show_feedback()
