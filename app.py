@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 
 from db import init_db
 from auth_service import register_user, login_user
@@ -27,6 +28,28 @@ if "language" not in st.session_state:
 
 if "ai_provider" not in st.session_state:
     st.session_state.ai_provider = "Ollama (Local)"
+
+# Remember user login
+
+if (
+    st.session_state.user is None
+    and os.path.exists(
+        "remember_user.txt"
+    )
+):
+
+    with open(
+        "remember_user.txt",
+        "r"
+    ) as f:
+
+        saved_user = f.read().strip()
+
+    if saved_user:
+
+        st.session_state.user = saved_user
+
+# Language Selector
 
 language_options = {
     "English": "English",
@@ -58,13 +81,14 @@ new_language = language_options[
 if new_language != st.session_state.language:
 
     st.session_state.language = new_language
+
     st.rerun()
 
 t = translations[
     st.session_state.language
 ]
 
-# LOGIN / REGISTER PAGE
+# LOGIN / REGISTER
 
 if st.session_state.user is None:
 
@@ -94,6 +118,10 @@ if st.session_state.user is None:
             type="password"
         )
 
+        remember_me = st.checkbox(
+            t["remember_me"]
+        )
+
         if st.button(
             t["login"]
         ):
@@ -106,6 +134,18 @@ if st.session_state.user is None:
             if user:
 
                 st.session_state.user = username
+
+                if remember_me:
+
+                    with open(
+                        "remember_user.txt",
+                        "w"
+                    ) as f:
+
+                        f.write(
+                            username
+                        )
+
                 st.rerun()
 
             else:
@@ -146,6 +186,8 @@ if st.session_state.user is None:
 
     st.stop()
 
+# Logged In User
+
 logged_in_text = {
     "English": f"Logged in as: {st.session_state.user}",
     "Hindi": f"लॉग इन उपयोगकर्ता: {st.session_state.user}",
@@ -156,11 +198,24 @@ st.sidebar.success(
     logged_in_text
 )
 
+# Logout
+
 if st.sidebar.button(
     t["logout"]
 ):
+
     st.session_state.user = None
+
+    if os.path.exists(
+        "remember_user.txt"
+    ):
+        os.remove(
+            "remember_user.txt"
+        )
+
     st.rerun()
+
+# Main Page
 
 st.title(
     t["app_name"]
