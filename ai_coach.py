@@ -22,9 +22,14 @@ def show_ai_coach():
     if not transactions:
 
         message = {
-            "English": "Add expenses first to receive advice.",
-            "Hindi": "सलाह प्राप्त करने के लिए पहले खर्च जोड़ें।",
-            "Telugu": "సలహా పొందడానికి ముందుగా ఖర్చులు జోడించండి."
+            "English":
+                "Add expenses first to receive advice.",
+
+            "Hindi":
+                "सलाह प्राप्त करने के लिए पहले खर्च जोड़ें।",
+
+            "Telugu":
+                "సలహా పొందడానికి ముందుగా ఖర్చులు జోడించండి."
         }[language]
 
         st.info(
@@ -57,9 +62,14 @@ def show_ai_coach():
     )
 
     total_text = {
-        "English": f"Total Spending: ₹{total:.2f}",
-        "Hindi": f"कुल खर्च: ₹{total:.2f}",
-        "Telugu": f"మొత్తం ఖర్చు: ₹{total:.2f}"
+        "English":
+            f"Total Spending: ₹{total:.2f}",
+
+        "Hindi":
+            f"कुल खर्च: ₹{total:.2f}",
+
+        "Telugu":
+            f"మొత్తం ఖర్చు: ₹{total:.2f}"
     }[language]
 
     st.write(
@@ -67,9 +77,14 @@ def show_ai_coach():
     )
 
     category_text = {
-        "English": f"Highest Spending Category: {top_category}",
-        "Hindi": f"सबसे अधिक खर्च की श्रेणी: {top_category}",
-        "Telugu": f"అత్యధిక ఖర్చు చేసిన వర్గం: {top_category}"
+        "English":
+            f"Highest Spending Category: {top_category}",
+
+        "Hindi":
+            f"सबसे अधिक खर्च की श्रेणी: {top_category}",
+
+        "Telugu":
+            f"అత్యధిక ఖర్చు చేసిన వర్గం: {top_category}"
     }[language]
 
     st.write(
@@ -79,9 +94,14 @@ def show_ai_coach():
     if total < 1000:
 
         message = {
-            "English": "Excellent work. Your spending is under control.",
-            "Hindi": "बहुत बढ़िया। आपका खर्च नियंत्रण में है।",
-            "Telugu": "అద్భుతం. మీ ఖర్చులు నియంత్రణలో ఉన్నాయి."
+            "English":
+                "Excellent work. Your spending is under control.",
+
+            "Hindi":
+                "बहुत बढ़िया। आपका खर्च नियंत्रण में है।",
+
+            "Telugu":
+                "అద్భుతం. మీ ఖర్చులు నియంత్రణలో ఉన్నాయి."
         }[language]
 
         st.success(
@@ -91,9 +111,14 @@ def show_ai_coach():
     elif total < 3000:
 
         message = {
-            "English": "Try reducing non-essential spending by 10%.",
-            "Hindi": "अनावश्यक खर्चों को 10% कम करने का प्रयास करें।",
-            "Telugu": "అవసరం లేని ఖర్చులను 10% తగ్గించడానికి ప్రయత్నించండి."
+            "English":
+                "Try reducing non-essential spending by 10%.",
+
+            "Hindi":
+                "अनावश्यक खर्चों को 10% कम करने का प्रयास करें।",
+
+            "Telugu":
+                "అవసరం లేని ఖర్చులను 10% తగ్గించడానికి ప్రయత్నించండి."
         }[language]
 
         st.warning(
@@ -103,9 +128,14 @@ def show_ai_coach():
     else:
 
         message = {
-            "English": "Spending is high. Consider setting weekly limits.",
-            "Hindi": "खर्च अधिक है। साप्ताहिक सीमा निर्धारित करें।",
-            "Telugu": "ఖర్చు ఎక్కువగా ఉంది. వారాంతపు పరిమితులను నిర్ణయించండి."
+            "English":
+                "Spending is high. Consider setting weekly limits.",
+
+            "Hindi":
+                "खर्च अधिक है। साप्ताहिक सीमा निर्धारित करें।",
+
+            "Telugu":
+                "ఖర్చు ఎక్కువగా ఉంది. వారాంతపు పరిమితులను నిర్ణయించండి."
         }[language]
 
         st.error(
@@ -119,7 +149,10 @@ def show_ai_coach():
     )
 
     st.info(
-        get_tip(balance)
+        get_tip(
+            balance,
+            top_category
+        )
     )
 
     provider = st.session_state.get(
@@ -128,9 +161,14 @@ def show_ai_coach():
     )
 
     provider_text = {
-        "English": f"AI Provider: {provider}",
-        "Hindi": f"एआई प्रदाता: {provider}",
-        "Telugu": f"ఏఐ ప్రొవైడర్: {provider}"
+        "English":
+            f"AI Provider: {provider}",
+
+        "Hindi":
+            f"एआई प्रदाता: {provider}",
+
+        "Telugu":
+            f"ఏఐ ప్రొవైడర్: {provider}"
     }[language]
 
     st.success(
