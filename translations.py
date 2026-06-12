@@ -24,12 +24,13 @@ translations = {
 
         # MENU
 
-        "dashboard": "📊 Dashboard",
-        "analytics": "📈 Analytics",
-        "ai_coach": "🤖 AI Coach",
-        "ai_settings": "⚙️ AI Settings",
-        "savings_game": "🎮 Savings Game",
-        "feedback": "💬 Feedback",
+"dashboard": "📊 Dashboard",
+"analytics": "📈 Analytics",
+"ai_coach": "🤖 AI Coach",
+"ai_settings": "⚙️ AI Settings",
+"savings_game": "🎮 Savings Game",
+"feedback": "💬 Feedback",
+"view_feedback": "📋 View Feedback",
 
         # DASHBOARD
 
@@ -108,12 +109,13 @@ translations = {
 
         # MENU
 
-        "dashboard": "📊 डैशबोर्ड",
-        "analytics": "📈 विश्लेषण",
-        "ai_coach": "🤖 एआई कोच",
-        "ai_settings": "⚙️ एआई सेटिंग्स",
-        "savings_game": "🎮 बचत खेल",
-        "feedback": "💬 प्रतिक्रिया",
+"dashboard": "📊 डैशबोर्ड",
+"analytics": "📈 विश्लेषण",
+"ai_coach": "🤖 एआई कोच",
+"ai_settings": "⚙️ एआई सेटिंग्स",
+"savings_game": "🎮 बचत खेल",
+"feedback": "💬 प्रतिक्रिया",
+"view_feedback": "📋 प्रतिक्रिया देखें",
 
         # DASHBOARD
 
@@ -189,15 +191,16 @@ translations = {
         "invalid_login": "తప్పు వినియోగదారు పేరు లేదా పాస్‌వర్డ్",
         "account_created": "ఖాతా విజయవంతంగా సృష్టించబడింది.",
         "username_exists": "ఈ వినియోగదారు పేరు ఇప్పటికే ఉంది.",
-
+        
         # MENU
 
-        "dashboard": "📊 డాష్‌బోర్డ్",
-        "analytics": "📈 విశ్లేషణలు",
-        "ai_coach": "🤖 ఏఐ కోచ్",
-        "ai_settings": "⚙️ ఏఐ సెట్టింగ్స్",
-        "savings_game": "🎮 పొదుపు ఆట",
-        "feedback": "💬 అభిప్రాయం",
+"dashboard": "📊 డాష్‌బోర్డ్",
+"analytics": "📈 విశ్లేషణలు",
+"ai_coach": "🤖 ఏఐ కోచ్",
+"ai_settings": "⚙️ ఏఐ సెట్టింగ్స్",
+"savings_game": "🎮 పొదుపు ఆట",
+"feedback": "💬 అభిప్రాయం",
+"view_feedback": "📋 అభిప్రాయాలను చూడండి",
 
         # DASHBOARD
 
