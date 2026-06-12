@@ -17,15 +17,17 @@ def show_dashboard():
 
     username = st.session_state.user
 
-    st.header(t["dashboard"])
+    st.header(
+        t["dashboard"]
+    )
 
     pocket_money = st.number_input(
-        "Monthly Pocket Money",
+        t["monthly_pocket_money"],
         value=5000.0
     )
 
     category = st.selectbox(
-        "Category",
+        t["category"],
         [
             "Food",
             "Travel",
@@ -37,15 +39,17 @@ def show_dashboard():
     )
 
     amount = st.number_input(
-        "Amount",
+        t["amount"],
         min_value=0.0
     )
 
     description = st.text_input(
-        "Description"
+        t["description"]
     )
 
-    if st.button(t["add_expense"]):
+    if st.button(
+        t["add_expense"]
+    ):
 
         add_transaction(
             username,
@@ -55,7 +59,7 @@ def show_dashboard():
         )
 
         st.success(
-            "Expense Added"
+            t["expense_added"]
         )
 
     transactions = get_transactions(
@@ -88,17 +92,17 @@ def show_dashboard():
     c1, c2, c3 = st.columns(3)
 
     c1.metric(
-        "Pocket Money",
+        t["pocket_money"],
         f"₹{pocket_money:.0f}"
     )
 
     c2.metric(
-        "Spent",
+        t["spent"],
         f"₹{total:.0f}"
     )
 
     c3.metric(
-        "Remaining",
+        t["remaining"],
         f"₹{balance:.0f}"
     )
 
@@ -106,7 +110,7 @@ def show_dashboard():
         df,
         names="Category",
         values="Amount",
-        hole=.6
+        hole=0.6
     )
 
     st.plotly_chart(
