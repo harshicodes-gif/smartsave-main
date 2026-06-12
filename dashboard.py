@@ -4,7 +4,8 @@ import plotly.express as px
 
 from budget_service import (
     add_transaction,
-    get_transactions
+    get_transactions,
+    delete_transaction
 )
 
 from translations import translations
@@ -27,6 +28,7 @@ def show_dashboard():
     )
 
     category_options = {
+
         "English": {
             "Food": "Food",
             "Travel": "Travel",
@@ -57,7 +59,11 @@ def show_dashboard():
 
     selected_category = st.selectbox(
         t["category"],
-        list(category_options[language].keys())
+        list(
+            category_options[
+                language
+            ].keys()
+        )
     )
 
     category = category_options[
@@ -90,6 +96,8 @@ def show_dashboard():
             t["expense_added"]
         )
 
+        st.rerun()
+
     transactions = get_transactions(
         username
     )
@@ -113,11 +121,18 @@ def show_dashboard():
         ]
     )
 
-    total = df["Amount"].sum()
+    total = df[
+        "Amount"
+    ].sum()
 
-    balance = pocket_money - total
+    balance = (
+        pocket_money
+        - total
+    )
 
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3 = st.columns(
+        3
+    )
 
     c1.metric(
         t["pocket_money"],
@@ -146,7 +161,46 @@ def show_dashboard():
         use_container_width=True
     )
 
+    st.subheader(
+        t["transactions"]
+    )
+
     st.dataframe(
         df,
         use_container_width=True
     )
+
+    st.subheader(
+        t["delete_expense"]
+    )
+
+    expense_options = {
+
+        f"ID {row['ID']} | {row['Category']} | ₹{row['Amount']}":
+        row["ID"]
+
+        for _, row in df.iterrows()
+    }
+
+    selected_expense = st.selectbox(
+        t["select_expense"],
+        list(
+            expense_options.keys()
+        )
+    )
+
+    if st.button(
+        "🗑 " + t["delete_expense"]
+    ):
+
+        delete_transaction(
+            expense_options[
+                selected_expense
+            ]
+        )
+
+        st.success(
+            t["expense_deleted"]
+        )
+
+        st.rerun()
