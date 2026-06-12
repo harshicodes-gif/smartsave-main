@@ -1,57 +1,69 @@
 import streamlit as st
 
+from translations import translations
+
+
 def show_ai_settings():
 
-    st.header("⚙️ AI Settings")
+    language = st.session_state.language
+    t = translations[language]
+
+    st.header(
+        t["ai_settings"]
+    )
 
     st.write(
-        "Configure your AI provider."
+        t["configure_ai"]
     )
 
     provider = st.radio(
-        "Select AI Provider",
+        t["select_provider"],
         [
-            "Ollama (Local)",
-            "BYOK"
+            t["ollama"],
+            t["byok"]
         ]
     )
 
     st.session_state.ai_provider = provider
 
-    if provider == "Ollama (Local)":
+    if provider == t["ollama"]:
 
-        st.subheader("Ollama Configuration")
+        st.subheader(
+            t["ollama_config"]
+        )
 
         st.text_input(
-            "Ollama URL",
+            t["ollama_url"],
             value="http://localhost:11434",
             key="ollama_url"
         )
 
         st.text_input(
-            "Model Name",
+            t["model_name"],
             value="llama3",
             key="ollama_model"
         )
 
         st.success(
-            "Ollama Local AI configured."
+            t["local_ai_ready"]
         )
 
     else:
 
-        st.subheader("Bring Your Own Key")
+        st.subheader(
+            t["bring_your_key"]
+        )
 
         st.text_input(
-            "API Key",
+            t["api_key"],
             type="password",
             key="api_key"
         )
 
         st.success(
-            "API Key stored for current session."
+            t["api_key_saved"]
         )
 
     st.info(
-        f"Current Provider: {st.session_state.ai_provider}"
+        f"{t['current_provider']}: {provider}"
     )
