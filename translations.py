@@ -39,9 +39,17 @@ translations = {
         "category": "Category",
         "amount": "Amount",
         "description": "Description",
+        
         "add_expense": "➕ Add Expense",
         "expense_added": "Expense Added",
+        
+        "transactions": "Transactions",
+        "delete_expense": "Delete Expense",
+        "select_expense": "Select Expense",
+        "expense_deleted": "Expense deleted successfully.",
+        
         "no_expenses": "No expenses yet.",
+        
         "pocket_money": "Pocket Money",
         "spent": "Spent",
         "remaining": "Remaining",
@@ -125,9 +133,17 @@ translations = {
         "category": "श्रेणी",
         "amount": "राशि",
         "description": "विवरण",
+        
         "add_expense": "➕ खर्च जोड़ें",
         "expense_added": "खर्च जोड़ा गया",
+        
+        "transactions": "लेनदेन",
+        "delete_expense": "खर्च हटाएं",
+        "select_expense": "खर्च चुनें",
+        "expense_deleted": "खर्च सफलतापूर्वक हटाया गया।",
+        
         "no_expenses": "अभी तक कोई खर्च नहीं।",
+        
         "pocket_money": "पॉकेट मनी",
         "spent": "खर्च",
         "remaining": "शेष",
@@ -211,9 +227,17 @@ translations = {
         "category": "వర్గం",
         "amount": "మొత్తం",
         "description": "వివరణ",
+        
         "add_expense": "➕ ఖర్చు జోడించండి",
         "expense_added": "ఖర్చు జోడించబడింది",
+        
+        "transactions": "లావాదేవీలు",
+        "delete_expense": "ఖర్చును తొలగించండి",
+        "select_expense": "ఖర్చును ఎంచుకోండి",
+        "expense_deleted": "ఖర్చు విజయవంతంగా తొలగించబడింది.",
+        
         "no_expenses": "ఇంకా ఖర్చులు లేవు.",
+        
         "pocket_money": "పాకెట్ మనీ",
         "spent": "ఖర్చు",
         "remaining": "మిగిలినది",
