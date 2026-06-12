@@ -3,10 +3,15 @@ import pandas as pd
 import plotly.express as px
 
 from budget_service import get_transactions
+from translations import translations
+
 
 def show_analytics():
 
-    st.header("📈 Analytics")
+    language = st.session_state.language
+    t = translations[language]
+
+    st.header(t["analytics"])
 
     transactions = get_transactions(
         st.session_state.user
