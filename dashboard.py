@@ -26,17 +26,45 @@ def show_dashboard():
         value=5000.0
     )
 
-    category = st.selectbox(
+    category_options = {
+        "English": {
+            "Food": "Food",
+            "Travel": "Travel",
+            "Entertainment": "Entertainment",
+            "Study": "Study",
+            "Shopping": "Shopping",
+            "Other": "Other"
+        },
+
+        "Hindi": {
+            "भोजन": "Food",
+            "यात्रा": "Travel",
+            "मनोरंजन": "Entertainment",
+            "पढ़ाई": "Study",
+            "खरीदारी": "Shopping",
+            "अन्य": "Other"
+        },
+
+        "Telugu": {
+            "ఆహారం": "Food",
+            "ప్రయాణం": "Travel",
+            "వినోదం": "Entertainment",
+            "చదువు": "Study",
+            "షాపింగ్": "Shopping",
+            "ఇతర": "Other"
+        }
+    }
+
+    selected_category = st.selectbox(
         t["category"],
-        [
-            "Food",
-            "Travel",
-            "Entertainment",
-            "Study",
-            "Shopping",
-            "Other"
-        ]
+        list(category_options[language].keys())
     )
+
+    category = category_options[
+        language
+    ][
+        selected_category
+    ]
 
     amount = st.number_input(
         t["amount"],
