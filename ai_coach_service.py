@@ -8,32 +8,38 @@ def get_tip(balance, top_category):
         "English"
     )
 
-    if balance < 500:
+    spent = 5000 - balance
+
+    spending_ratio = spent / 5000
+
+    if spending_ratio >= 0.8:
 
         tips = {
+
             "English":
-                f"Your highest spending category is {top_category}. Consider reducing expenses in this category to improve your savings.",
+                f"You are spending a large portion of your pocket money. Your highest spending category is {top_category}. Consider reducing expenses in this category and setting weekly spending limits.",
 
             "Hindi":
-                f"आपकी सबसे अधिक खर्च वाली श्रेणी {top_category} है। बचत बढ़ाने के लिए इस श्रेणी में खर्च कम करने पर विचार करें।",
+                f"आप अपनी पॉकेट मनी का बड़ा हिस्सा खर्च कर रहे हैं। आपकी सबसे अधिक खर्च वाली श्रेणी {top_category} है। इस श्रेणी में खर्च कम करने और साप्ताहिक खर्च सीमा निर्धारित करने पर विचार करें।",
 
             "Telugu":
-                f"మీ అత్యధిక ఖర్చు వర్గం {top_category}. పొదుపును పెంచడానికి ఈ వర్గంలోని ఖర్చులను తగ్గించడానికి ప్రయత్నించండి."
+                f"మీరు మీ పాకెట్ మనీలో ఎక్కువ భాగం ఖర్చు చేస్తున్నారు. మీ అత్యధిక ఖర్చు వర్గం {top_category}. ఈ వర్గంలో ఖర్చులను తగ్గించి వారానికి ఒక ఖర్చు పరిమితిని నిర్ణయించండి."
         }
 
         return tips[language]
 
-    elif balance < 1000:
+    elif spending_ratio >= 0.5:
 
         tips = {
+
             "English":
-                f"Good progress. Monitor your spending in {top_category} and try to save a little more every week.",
+                f"You are managing reasonably well. Keep an eye on your spending in {top_category} and try to save a little more each week.",
 
             "Hindi":
-                f"अच्छी प्रगति। {top_category} में होने वाले खर्च पर नज़र रखें और हर सप्ताह थोड़ी अधिक बचत करने का प्रयास करें।",
+                f"आप अच्छी तरह प्रबंधन कर रहे हैं। {top_category} में होने वाले खर्च पर नज़र रखें और हर सप्ताह थोड़ी अधिक बचत करने का प्रयास करें।",
 
             "Telugu":
-                f"మంచి పురోగతి. {top_category} వర్గంలోని ఖర్చులను గమనించి ప్రతి వారం కొంచెం ఎక్కువ పొదుపు చేయడానికి ప్రయత్నించండి."
+                f"మీరు బాగానే నిర్వహిస్తున్నారు. {top_category} వర్గంలోని ఖర్చులను గమనించి ప్రతి వారం కొంచెం ఎక్కువ పొదుపు చేయడానికి ప్రయత్నించండి."
         }
 
         return tips[language]
@@ -41,6 +47,7 @@ def get_tip(balance, top_category):
     else:
 
         tips = {
+
             "English":
                 "Excellent savings habit. Keep it up!",
 
