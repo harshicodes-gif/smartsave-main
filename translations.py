@@ -29,6 +29,7 @@ translations = {
         "ai_coach": "🤖 AI Coach",
         "ai_settings": "⚙️ AI Settings",
         "savings_game": "🎮 Savings Game",
+        "feedback": "💬 Feedback",
 
         # DASHBOARD
 
@@ -112,6 +113,7 @@ translations = {
         "ai_coach": "🤖 एआई कोच",
         "ai_settings": "⚙️ एआई सेटिंग्स",
         "savings_game": "🎮 बचत खेल",
+        "feedback": "💬 प्रतिक्रिया",
 
         # DASHBOARD
 
@@ -195,6 +197,7 @@ translations = {
         "ai_coach": "🤖 ఏఐ కోచ్",
         "ai_settings": "⚙️ ఏఐ సెట్టింగ్స్",
         "savings_game": "🎮 పొదుపు ఆట",
+        "feedback": "💬 అభిప్రాయం",
 
         # DASHBOARD
 
