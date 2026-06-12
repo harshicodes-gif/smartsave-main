@@ -38,9 +38,21 @@ language_options = {
     "తెలుగు": "Telugu"
 }
 
+reverse_language_options = {
+    "English": "English",
+    "Hindi": "हिन्दी",
+    "Telugu": "తెలుగు"
+}
+
 selected_language = st.sidebar.selectbox(
     language_label,
-    list(language_options.keys())
+    list(language_options.keys()),
+    index=list(language_options.keys()).index(
+        reverse_language_options[
+            st.session_state.language
+        ]
+    ),
+    key="language_selector"
 )
 
 st.session_state.language = language_options[
@@ -133,10 +145,14 @@ if st.session_state.user is None:
 
     st.stop()
 
-# LOGGED IN
+logged_in_text = {
+    "English": f"Logged in as: {st.session_state.user}",
+    "Hindi": f"लॉग इन उपयोगकर्ता: {st.session_state.user}",
+    "Telugu": f"లాగిన్ అయిన వినియోగదారు: {st.session_state.user}"
+}[st.session_state.language]
 
 st.sidebar.success(
-    f"Logged in as: {st.session_state.user}"
+    logged_in_text
 )
 
 if st.sidebar.button(
