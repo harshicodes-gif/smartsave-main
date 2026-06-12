@@ -24,15 +24,15 @@ def show_dashboard():
 
     if "pocket_money" not in st.session_state:
 
-    st.session_state.pocket_money = 5000.0
+        st.session_state.pocket_money = 5000.0
 
-pocket_money = st.number_input(
-    t["monthly_pocket_money"],
-    min_value=0.0,
-    value=st.session_state.pocket_money
-)
+    pocket_money = st.number_input(
+        t["monthly_pocket_money"],
+        min_value=0.0,
+        value=st.session_state.pocket_money
+    )
 
-st.session_state.pocket_money = pocket_money
+    st.session_state.pocket_money = pocket_money
 
     category_options = {
 
@@ -128,18 +128,14 @@ st.session_state.pocket_money = pocket_money
         ]
     )
 
-    total = df[
-        "Amount"
-    ].sum()
+    total = df["Amount"].sum()
 
     balance = (
         pocket_money
         - total
     )
 
-    c1, c2, c3 = st.columns(
-        3
-    )
+    c1, c2, c3 = st.columns(3)
 
     c1.metric(
         t["pocket_money"],
@@ -181,13 +177,19 @@ st.session_state.pocket_money = pocket_money
         t["delete_expense"]
     )
 
-    expense_options = {
+    expense_options = {}
 
-        f"ID {row['ID']} | {row['Category']} | ₹{row['Amount']}":
-        row["ID"]
+    for _, row in df.iterrows():
 
-        for _, row in df.iterrows()
-    }
+        label = (
+            f"ID {row['ID']} | "
+            f"{row['Category']} | "
+            f"₹{row['Amount']}"
+        )
+
+        expense_options[
+            label
+        ] = row["ID"]
 
     selected_expense = st.selectbox(
         t["select_expense"],
