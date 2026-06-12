@@ -11,7 +11,9 @@ def show_analytics():
     language = st.session_state.language
     t = translations[language]
 
-    st.header(t["analytics"])
+    st.header(
+        t["analytics"]
+    )
 
     transactions = get_transactions(
         st.session_state.user
@@ -20,7 +22,11 @@ def show_analytics():
     if not transactions:
 
         st.warning(
-            "No expense data available."
+            {
+                "English": "No expense data available.",
+                "Hindi": "कोई खर्च डेटा उपलब्ध नहीं है।",
+                "Telugu": "ఖర్చుల సమాచారం అందుబాటులో లేదు."
+            }[language]
         )
 
         return
@@ -36,7 +42,9 @@ def show_analytics():
         ]
     )
 
-    st.subheader("Category Wise Spending")
+    st.subheader(
+        t["category_spending"]
+    )
 
     category_summary = (
         df.groupby("Category")["Amount"]
@@ -44,11 +52,17 @@ def show_analytics():
         .reset_index()
     )
 
+    chart_title = {
+        "English": "Spending By Category",
+        "Hindi": "श्रेणी अनुसार खर्च",
+        "Telugu": "వర్గాల వారీగా ఖర్చులు"
+    }[language]
+
     fig = px.bar(
         category_summary,
         x="Category",
         y="Amount",
-        title="Spending By Category"
+        title=chart_title
     )
 
     st.plotly_chart(
@@ -60,18 +74,28 @@ def show_analytics():
         category_summary["Amount"].idxmax()
     ]
 
+    highest_text = {
+        "English": f"Highest spending category: {highest['Category']} (₹{highest['Amount']:.2f})",
+        "Hindi": f"सबसे अधिक खर्च की श्रेणी: {highest['Category']} (₹{highest['Amount']:.2f})",
+        "Telugu": f"అత్యధిక ఖర్చు చేసిన వర్గం: {highest['Category']} (₹{highest['Amount']:.2f})"
+    }[language]
+
     st.success(
-        f"Highest spending category: {highest['Category']} (₹{highest['Amount']:.2f})"
+        highest_text
     )
 
-    st.subheader("Detailed Summary")
+    st.subheader(
+        t["detailed_summary"]
+    )
 
     st.dataframe(
         category_summary,
         use_container_width=True
     )
 
-    st.subheader("All Transactions")
+    st.subheader(
+        t["all_transactions"]
+    )
 
     st.dataframe(
         df,
