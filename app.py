@@ -7,6 +7,7 @@ from analytics import show_analytics
 from ai_coach import show_ai_coach
 from savings_game import show_game
 from ai_settings import show_ai_settings
+from translations import translations
 
 init_db()
 
@@ -25,30 +26,50 @@ if "language" not in st.session_state:
 if "ai_provider" not in st.session_state:
     st.session_state.ai_provider = "Ollama (Local)"
 
+# Language Selector
+st.session_state.language = st.sidebar.selectbox(
+    "🌐 Language",
+    [
+        "English",
+        "Hindi",
+        "Telugu"
+    ]
+)
+
+t = translations[st.session_state.language]
+
+# LOGIN / REGISTER SCREEN
 if st.session_state.user is None:
 
-    st.title("💰 SmartSave")
-    st.subheader("Pocket Money Manager for Students")
+    st.title(
+        t["app_name"]
+    )
+
+    st.subheader(
+        t["tagline"]
+    )
 
     tab1, tab2 = st.tabs(
         [
-            "Login",
-            "Register"
+            t["login"],
+            t["register"]
         ]
     )
 
     with tab1:
 
         username = st.text_input(
-            "Username"
+            t["username"]
         )
 
         password = st.text_input(
-            "Password",
+            t["password"],
             type="password"
         )
 
-        if st.button("Login"):
+        if st.button(
+            t["login"]
+        ):
 
             user = login_user(
                 username,
@@ -63,21 +84,23 @@ if st.session_state.user is None:
             else:
 
                 st.error(
-                    "Invalid username or password"
+                    t["invalid_login"]
                 )
 
     with tab2:
 
         new_user = st.text_input(
-            "Create Username"
+            t["create_username"]
         )
 
         new_pass = st.text_input(
-            "Create Password",
+            t["create_password"],
             type="password"
         )
 
-        if st.button("Register"):
+        if st.button(
+            t["register"]
+        ):
 
             if register_user(
                 new_user,
@@ -85,68 +108,64 @@ if st.session_state.user is None:
             ):
 
                 st.success(
-                    "Account created successfully."
+                    t["account_created"]
                 )
 
             else:
 
                 st.error(
-                    "Username already exists."
+                    t["username_exists"]
                 )
 
     st.stop()
 
+# LOGGED-IN APP
+
 st.sidebar.success(
-    f"Logged in as: {st.session_state.user}"
+    f"{st.session_state.user}"
 )
 
-st.session_state.language = st.sidebar.selectbox(
-    "🌐 Language",
-    [
-        "English",
-        "Hindi",
-        "Telugu"
-    ]
-)
-
-if st.sidebar.button("Logout"):
-
+if st.sidebar.button(
+    t["logout"]
+):
     st.session_state.user = None
     st.rerun()
 
-st.title("💰 SmartSave")
+st.title(
+    t["app_name"]
+)
 
 st.caption(
-    "Track expenses, manage pocket money, and build smarter saving habits."
+    t["tagline"]
 )
 
 menu = st.sidebar.radio(
-    "Navigation",
+    t["navigation"],
     [
-        "Dashboard",
-        "Analytics",
-        "AI Coach",
-        "AI Settings",
-        "Savings Game"
+        t["dashboard"],
+        t["analytics"],
+        t["ai_coach"],
+        t["ai_settings"],
+        t["savings_game"]
     ]
 )
 
-if menu == "Dashboard":
+if menu == t["dashboard"]:
 
     show_dashboard()
 
-elif menu == "Analytics":
+elif menu == t["analytics"]:
 
     show_analytics()
 
-elif menu == "AI Coach":
+elif menu == t["ai_coach"]:
 
     show_ai_coach()
 
-elif menu == "AI Settings":
+elif menu == t["ai_settings"]:
 
     show_ai_settings()
 
-elif menu == "Savings Game":
+elif menu == t["savings_game"]:
 
     show_game()
