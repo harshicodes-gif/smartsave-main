@@ -26,19 +26,33 @@ if "language" not in st.session_state:
 if "ai_provider" not in st.session_state:
     st.session_state.ai_provider = "Ollama (Local)"
 
-# Language Selector
-st.session_state.language = st.sidebar.selectbox(
-    "🌐 Language",
-    [
-        "English",
-        "Hindi",
-        "Telugu"
-    ]
+language_label = {
+    "English": "🌐 Language",
+    "Hindi": "🌐 भाषा",
+    "Telugu": "🌐 భాష"
+}[st.session_state.language]
+
+language_options = {
+    "English": "English",
+    "हिन्दी": "Hindi",
+    "తెలుగు": "Telugu"
+}
+
+selected_language = st.sidebar.selectbox(
+    language_label,
+    list(language_options.keys())
 )
 
-t = translations[st.session_state.language]
+st.session_state.language = language_options[
+    selected_language
+]
 
-# LOGIN / REGISTER SCREEN
+t = translations[
+    st.session_state.language
+]
+
+# LOGIN / REGISTER PAGE
+
 if st.session_state.user is None:
 
     st.title(
@@ -119,10 +133,10 @@ if st.session_state.user is None:
 
     st.stop()
 
-# LOGGED-IN APP
+# LOGGED IN
 
 st.sidebar.success(
-    f"{st.session_state.user}"
+    f"Logged in as: {st.session_state.user}"
 )
 
 if st.sidebar.button(
