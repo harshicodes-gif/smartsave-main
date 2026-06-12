@@ -7,11 +7,17 @@ from budget_service import (
     get_transactions
 )
 
+from translations import translations
+
+
 def show_dashboard():
+
+    language = st.session_state.language
+    t = translations[language]
 
     username = st.session_state.user
 
-    st.header("📊 Dashboard")
+    st.header(t["dashboard"])
 
     pocket_money = st.number_input(
         "Monthly Pocket Money",
@@ -39,7 +45,7 @@ def show_dashboard():
         "Description"
     )
 
-    if st.button("➕ Add Expense"):
+    if st.button(t["add_expense"]):
 
         add_transaction(
             username,
@@ -59,7 +65,7 @@ def show_dashboard():
     if not transactions:
 
         st.info(
-            "No expenses yet."
+            t["no_expenses"]
         )
 
         return
@@ -79,7 +85,7 @@ def show_dashboard():
 
     balance = pocket_money - total
 
-    c1,c2,c3 = st.columns(3)
+    c1, c2, c3 = st.columns(3)
 
     c1.metric(
         "Pocket Money",
