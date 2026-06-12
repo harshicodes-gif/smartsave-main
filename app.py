@@ -28,12 +28,6 @@ if "language" not in st.session_state:
 if "ai_provider" not in st.session_state:
     st.session_state.ai_provider = "Ollama (Local)"
 
-language_label = {
-    "English": "🌐 Language",
-    "Hindi": "🌐 भाषा",
-    "Telugu": "🌐 భాష"
-}[st.session_state.language]
-
 language_options = {
     "English": "English",
     "हिन्दी": "Hindi",
@@ -47,7 +41,7 @@ reverse_language_options = {
 }
 
 selected_language = st.sidebar.selectbox(
-    language_label,
+    "🌐 Language",
     list(language_options.keys()),
     index=list(language_options.keys()).index(
         reverse_language_options[
@@ -57,9 +51,14 @@ selected_language = st.sidebar.selectbox(
     key="language_selector"
 )
 
-st.session_state.language = language_options[
+new_language = language_options[
     selected_language
 ]
+
+if new_language != st.session_state.language:
+
+    st.session_state.language = new_language
+    st.rerun()
 
 t = translations[
     st.session_state.language
@@ -180,7 +179,7 @@ menu = st.sidebar.radio(
         t["ai_settings"],
         t["savings_game"],
         t["feedback"],
-        "📋 View Feedback"
+        t["view_feedback"]
     ]
 )
 
@@ -208,6 +207,6 @@ elif menu == t["feedback"]:
 
     show_feedback()
 
-elif menu == "📋 View Feedback":
+elif menu == t["view_feedback"]:
 
     show_feedback_viewer()
