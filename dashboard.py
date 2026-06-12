@@ -22,10 +22,17 @@ def show_dashboard():
         t["dashboard"]
     )
 
-    pocket_money = st.number_input(
-        t["monthly_pocket_money"],
-        value=5000.0
-    )
+    if "pocket_money" not in st.session_state:
+
+    st.session_state.pocket_money = 5000.0
+
+pocket_money = st.number_input(
+    t["monthly_pocket_money"],
+    min_value=0.0,
+    value=st.session_state.pocket_money
+)
+
+st.session_state.pocket_money = pocket_money
 
     category_options = {
 
