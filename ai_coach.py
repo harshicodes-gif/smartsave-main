@@ -2,10 +2,16 @@ import streamlit as st
 import pandas as pd
 
 from budget_service import get_transactions
+from ai_coach_service import get_tip
+from translations import translations
+
 
 def show_ai_coach():
 
-    st.header("🤖 SmartSave AI Coach")
+    language = st.session_state.language
+    t = translations[language]
+
+    st.header(t["ai_coach"])
 
     transactions = get_transactions(
         st.session_state.user
@@ -38,7 +44,9 @@ def show_ai_coach():
         .idxmax()
     )
 
-    st.subheader("Your Financial Analysis")
+    st.subheader(
+        "Your Financial Analysis"
+    )
 
     st.write(
         f"Total Spending: ₹{total:.2f}"
@@ -77,8 +85,21 @@ def show_ai_coach():
             """
         )
 
-    st.subheader("Recommendation")
+    balance = 5000 - total
+
+    st.subheader(
+        t["recommendation"]
+    )
 
     st.info(
-        f"Try reducing {top_category} expenses by 10-15% this month."
+        get_tip(balance)
+    )
+
+    provider = st.session_state.get(
+        "ai_provider",
+        "Ollama (Local)"
+    )
+
+    st.success(
+        f"AI Provider: {provider}"
     )
