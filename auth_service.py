@@ -1,18 +1,45 @@
 from db import get_connection
 
-def register_user(username, password):
+
+def register_user(
+    username,
+    password
+):
 
     conn = get_connection()
+
     cur = conn.cursor()
 
     try:
 
         cur.execute(
             """
-            INSERT INTO users(username,password)
-            VALUES(?,?)
+            INSERT INTO users
+            (
+                username,
+                password
+            )
+            VALUES (?, ?)
             """,
-            (username,password)
+            (
+                username,
+                password
+            )
+        )
+
+        cur.execute(
+            """
+            INSERT INTO user_settings
+            (
+                username,
+                pocket_money
+            )
+            VALUES (?, ?)
+            """,
+            (
+                username,
+                5000
+            )
         )
 
         conn.commit()
@@ -28,19 +55,26 @@ def register_user(username, password):
         conn.close()
 
 
-def login_user(username,password):
+def login_user(
+    username,
+    password
+):
 
     conn = get_connection()
+
     cur = conn.cursor()
 
     cur.execute(
         """
         SELECT *
         FROM users
-        WHERE username=?
-        AND password=?
+        WHERE username = ?
+        AND password = ?
         """,
-        (username,password)
+        (
+            username,
+            password
+        )
     )
 
     user = cur.fetchone()
