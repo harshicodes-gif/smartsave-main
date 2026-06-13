@@ -24,17 +24,12 @@ def show_dashboard():
         t["dashboard"]
     )
 
-    # Load pocket money from database
+    # Load user's saved pocket money
 
-    if (
-        "pocket_money_loaded"
-        not in st.session_state
-    ):
+    if "pocket_money_loaded" not in st.session_state:
 
         st.session_state.pocket_money = (
-            get_pocket_money(
-                username
-            )
+            get_pocket_money(username)
         )
 
         st.session_state.pocket_money_loaded = True
@@ -45,14 +40,9 @@ def show_dashboard():
         value=st.session_state.pocket_money
     )
 
-    if (
-        pocket_money
-        != st.session_state.pocket_money
-    ):
+    if pocket_money != st.session_state.pocket_money:
 
-        st.session_state.pocket_money = (
-            pocket_money
-        )
+        st.session_state.pocket_money = pocket_money
 
         save_pocket_money(
             username,
@@ -88,6 +78,8 @@ def show_dashboard():
             "ఇతర": "Other"
         }
     }
+
+    # Form defaults
 
     if "expense_amount" not in st.session_state:
 
@@ -134,6 +126,8 @@ def show_dashboard():
         key="expense_description"
     )
 
+    # Add Expense
+
     if st.button(
         t["add_expense"]
     ):
@@ -145,29 +139,27 @@ def show_dashboard():
             description
         )
 
-        st.success(
-    t["expense_added"]
-)
+        if "expense_amount" in st.session_state:
 
-if "expense_amount" in st.session_state:
+            del st.session_state[
+                "expense_amount"
+            ]
 
-    del st.session_state[
-        "expense_amount"
-    ]
+        if "expense_description" in st.session_state:
 
-if "expense_description" in st.session_state:
+            del st.session_state[
+                "expense_description"
+            ]
 
-    del st.session_state[
-        "expense_description"
-    ]
+        if "expense_category" in st.session_state:
 
-if "expense_category" in st.session_state:
+            del st.session_state[
+                "expense_category"
+            ]
 
-    del st.session_state[
-        "expense_category"
-    ]
+        st.rerun()
 
-st.rerun()
+    # Transactions
 
     transactions = get_transactions(
         username
@@ -201,9 +193,7 @@ st.rerun()
         - total
     )
 
-    c1, c2, c3 = st.columns(
-        3
-    )
+    c1, c2, c3 = st.columns(3)
 
     c1.metric(
         t["pocket_money"],
@@ -240,6 +230,8 @@ st.rerun()
         df,
         use_container_width=True
     )
+
+    # Delete Expense
 
     st.subheader(
         t["delete_expense"]
