@@ -170,6 +170,12 @@ if st.sidebar.button(
 
     st.session_state.user = None
 
+    if "pocket_money_loaded" in st.session_state:
+
+        del st.session_state[
+            "pocket_money_loaded"
+        ]
+
     st.rerun()
 
 # Main Page
