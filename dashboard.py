@@ -5,7 +5,9 @@ import plotly.express as px
 from budget_service import (
     add_transaction,
     get_transactions,
-    delete_transaction
+    delete_transaction,
+    get_pocket_money,
+    save_pocket_money
 )
 
 from translations import translations
@@ -22,9 +24,20 @@ def show_dashboard():
         t["dashboard"]
     )
 
-    if "pocket_money" not in st.session_state:
+    # Load pocket money from database
 
-        st.session_state.pocket_money = 5000.0
+    if (
+        "pocket_money_loaded"
+        not in st.session_state
+    ):
+
+        st.session_state.pocket_money = (
+            get_pocket_money(
+                username
+            )
+        )
+
+        st.session_state.pocket_money_loaded = True
 
     pocket_money = st.number_input(
         t["monthly_pocket_money"],
@@ -32,7 +45,19 @@ def show_dashboard():
         value=st.session_state.pocket_money
     )
 
-    st.session_state.pocket_money = pocket_money
+    if (
+        pocket_money
+        != st.session_state.pocket_money
+    ):
+
+        st.session_state.pocket_money = (
+            pocket_money
+        )
+
+        save_pocket_money(
+            username,
+            pocket_money
+        )
 
     category_options = {
 
@@ -64,13 +89,32 @@ def show_dashboard():
         }
     }
 
+    if "expense_amount" not in st.session_state:
+
+        st.session_state.expense_amount = 0.0
+
+    if "expense_description" not in st.session_state:
+
+        st.session_state.expense_description = ""
+
+    if "expense_category" not in st.session_state:
+
+        st.session_state.expense_category = (
+            list(
+                category_options[
+                    language
+                ].keys()
+            )[0]
+        )
+
     selected_category = st.selectbox(
         t["category"],
         list(
             category_options[
                 language
             ].keys()
-        )
+        ),
+        key="expense_category"
     )
 
     category = category_options[
@@ -81,11 +125,13 @@ def show_dashboard():
 
     amount = st.number_input(
         t["amount"],
-        min_value=0.0
+        min_value=0.0,
+        key="expense_amount"
     )
 
     description = st.text_input(
-        t["description"]
+        t["description"],
+        key="expense_description"
     )
 
     if st.button(
@@ -101,6 +147,18 @@ def show_dashboard():
 
         st.success(
             t["expense_added"]
+        )
+
+        st.session_state.expense_amount = 0.0
+
+        st.session_state.expense_description = ""
+
+        st.session_state.expense_category = (
+            list(
+                category_options[
+                    language
+                ].keys()
+            )[0]
         )
 
         st.rerun()
@@ -128,14 +186,18 @@ def show_dashboard():
         ]
     )
 
-    total = df["Amount"].sum()
+    total = df[
+        "Amount"
+    ].sum()
 
     balance = (
         pocket_money
         - total
     )
 
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3 = st.columns(
+        3
+    )
 
     c1.metric(
         t["pocket_money"],
