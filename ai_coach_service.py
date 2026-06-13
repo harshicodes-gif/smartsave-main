@@ -1,16 +1,29 @@
 import streamlit as st
 
 
-def get_tip(balance, top_category):
+def get_tip(
+    balance,
+    top_category
+):
 
     language = st.session_state.get(
         "language",
         "English"
     )
 
-    spent = 5000 - balance
+    pocket_money = st.session_state.get(
+        "pocket_money",
+        5000
+    )
 
-    spending_ratio = spent / 5000
+    spent = (
+        pocket_money
+        - balance
+    )
+
+    spending_ratio = (
+        spent / pocket_money
+    ) if pocket_money > 0 else 0
 
     if spending_ratio >= 0.8:
 
