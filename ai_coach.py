@@ -1,7 +1,11 @@
 import streamlit as st
 import pandas as pd
 
-from budget_service import get_transactions
+from budget_service import (
+    get_transactions,
+    get_pocket_money
+)
+
 from ai_coach_service import get_tip
 from translations import translations
 
@@ -57,6 +61,14 @@ def show_ai_coach():
         .idxmax()
     )
 
+    pocket_money = get_pocket_money(
+        st.session_state.user
+    )
+
+    spending_ratio = (
+        total / pocket_money
+    ) if pocket_money > 0 else 0
+
     st.subheader(
         t["financial_analysis"]
     )
@@ -76,6 +88,21 @@ def show_ai_coach():
         total_text
     )
 
+    pocket_money_text = {
+        "English":
+            f"Monthly Pocket Money: ₹{pocket_money:.2f}",
+
+        "Hindi":
+            f"मासिक पॉकेट मनी: ₹{pocket_money:.2f}",
+
+        "Telugu":
+            f"నెలవారీ పాకెట్ మనీ: ₹{pocket_money:.2f}"
+    }[language]
+
+    st.write(
+        pocket_money_text
+    )
+
     category_text = {
         "English":
             f"Highest Spending Category: {top_category}",
@@ -91,9 +118,10 @@ def show_ai_coach():
         category_text
     )
 
-    if total < 1000:
+    if spending_ratio < 0.5:
 
         message = {
+
             "English":
                 "Excellent work. Your spending is under control.",
 
@@ -108,9 +136,10 @@ def show_ai_coach():
             message
         )
 
-    elif total < 3000:
+    elif spending_ratio < 0.8:
 
         message = {
+
             "English":
                 "Try reducing non-essential spending by 10%.",
 
@@ -128,6 +157,7 @@ def show_ai_coach():
     else:
 
         message = {
+
             "English":
                 "Spending is high. Consider setting weekly limits.",
 
@@ -142,7 +172,10 @@ def show_ai_coach():
             message
         )
 
-    balance = 5000 - total
+    balance = (
+        pocket_money
+        - total
+    )
 
     st.subheader(
         t["recommendation"]
