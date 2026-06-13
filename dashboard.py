@@ -146,22 +146,28 @@ def show_dashboard():
         )
 
         st.success(
-            t["expense_added"]
-        )
+    t["expense_added"]
+)
 
-        st.session_state.expense_amount = 0.0
+if "expense_amount" in st.session_state:
 
-        st.session_state.expense_description = ""
+    del st.session_state[
+        "expense_amount"
+    ]
 
-        st.session_state.expense_category = (
-            list(
-                category_options[
-                    language
-                ].keys()
-            )[0]
-        )
+if "expense_description" in st.session_state:
 
-        st.rerun()
+    del st.session_state[
+        "expense_description"
+    ]
+
+if "expense_category" in st.session_state:
+
+    del st.session_state[
+        "expense_category"
+    ]
+
+st.rerun()
 
     transactions = get_transactions(
         username
