@@ -1,23 +1,19 @@
 import streamlit as st
-
-from db import init_db
-from auth_service import register_user, login_user
-from dashboard import show_dashboard
-from analytics import show_analytics
 from ai_coach import show_ai_coach
-from savings_game import show_game
 from ai_settings import show_ai_settings
+from analytics import show_analytics
+from auth_service import login_user, register_user
+from dashboard import show_dashboard
+from db import init_db
+from expense_predictor import show_expense_predictor
 from feedback import show_feedback
-from view_feedback import show_feedback_viewer
+from savings_game import show_game
 from translations import translations
+from view_feedback import show_feedback_viewer
 
 init_db()
 
-st.set_page_config(
-    page_title="SmartSave",
-    page_icon="💰",
-    layout="wide"
-)
+st.set_page_config(page_title="SmartSave", page_icon="💰", layout="wide")
 
 if "user" not in st.session_state:
     st.session_state.user = None
@@ -33,120 +29,67 @@ if "ai_provider" not in st.session_state:
 language_options = {
     "English": "English",
     "हिन्दी": "Hindi",
-    "తెలుగు": "Telugu"
+    "తెలుగు": "Telugu",
 }
 
 reverse_language_options = {
     "English": "English",
     "Hindi": "हिन्दी",
-    "Telugu": "తెలుగు"
+    "Telugu": "తెలుగు",
 }
 
 selected_language = st.sidebar.selectbox(
     "🌐 Language",
     list(language_options.keys()),
     index=list(language_options.keys()).index(
-        reverse_language_options[
-            st.session_state.language
-        ]
+        reverse_language_options[st.session_state.language]
     ),
-    key="language_selector"
+    key="language_selector",
 )
 
-new_language = language_options[
-    selected_language
-]
+new_language = language_options[selected_language]
 
 if new_language != st.session_state.language:
-
     st.session_state.language = new_language
-
     st.rerun()
 
-t = translations[
-    st.session_state.language
-]
+t = translations[st.session_state.language]
 
 # LOGIN / REGISTER
 
 if st.session_state.user is None:
 
-    st.title(
-        t["app_name"]
-    )
+    st.title(t["app_name"])
+    st.subheader(t["tagline"])
 
-    st.subheader(
-        t["tagline"]
-    )
-
-    tab1, tab2 = st.tabs(
-        [
-            t["login"],
-            t["register"]
-        ]
-    )
+    tab1, tab2 = st.tabs([t["login"], t["register"]])
 
     with tab1:
 
-        username = st.text_input(
-            t["username"]
-        )
+        username = st.text_input(t["username"])
+        password = st.text_input(t["password"], type="password")
 
-        password = st.text_input(
-            t["password"],
-            type="password"
-        )
+        if st.button(t["login"]):
 
-        if st.button(
-            t["login"]
-        ):
-
-            user = login_user(
-                username,
-                password
-            )
+            user = login_user(username, password)
 
             if user:
-
                 st.session_state.user = username
-
                 st.rerun()
-
             else:
-
-                st.error(
-                    t["invalid_login"]
-                )
+                st.error(t["invalid_login"])
 
     with tab2:
 
-        new_user = st.text_input(
-            t["create_username"]
-        )
+        new_user = st.text_input(t["create_username"])
+        new_pass = st.text_input(t["create_password"], type="password")
 
-        new_pass = st.text_input(
-            t["create_password"],
-            type="password"
-        )
+        if st.button(t["register"]):
 
-        if st.button(
-            t["register"]
-        ):
-
-            if register_user(
-                new_user,
-                new_pass
-            ):
-
-                st.success(
-                    t["account_created"]
-                )
-
+            if register_user(new_user, new_pass):
+                st.success(t["account_created"])
             else:
-
-                st.error(
-                    t["username_exists"]
-                )
+                st.error(t["username_exists"])
 
     st.stop()
 
@@ -155,50 +98,39 @@ if st.session_state.user is None:
 logged_in_text = {
     "English": f"Logged in as: {st.session_state.user}",
     "Hindi": f"लॉग इन उपयोगकर्ता: {st.session_state.user}",
-    "Telugu": f"లాగిన్ అయిన వినియోగదారు: {st.session_state.user}"
+    "Telugu": f"లాగిన్ అయిన వినియోగదారు: {st.session_state.user}",
 }[st.session_state.language]
 
-st.sidebar.success(
-    logged_in_text
-)
+st.sidebar.success(logged_in_text)
 
 # Logout
 
-if st.sidebar.button(
-    t["logout"]
-):
+if st.sidebar.button(t["logout"]):
 
     st.session_state.user = None
 
     if "pocket_money_loaded" in st.session_state:
-
-        del st.session_state[
-            "pocket_money_loaded"
-        ]
+        del st.session_state["pocket_money_loaded"]
 
     st.rerun()
 
 # Main Page
 
-st.title(
-    t["app_name"]
-)
-
-st.caption(
-    t["tagline"]
-)
+st.title(t["app_name"])
+st.caption(t["tagline"])
 
 menu = st.sidebar.radio(
     t["navigation"],
     [
         t["dashboard"],
         t["analytics"],
+        t["expense_predictor"],
         t["ai_coach"],
         t["ai_settings"],
         t["savings_game"],
         t["feedback"],
-        t["view_feedback"]
-    ]
+        t["view_feedback"],
+    ],
 )
 
 if menu == t["dashboard"]:
@@ -208,6 +140,10 @@ if menu == t["dashboard"]:
 elif menu == t["analytics"]:
 
     show_analytics()
+
+elif menu == t["expense_predictor"]:
+
+    show_expense_predictor()
 
 elif menu == t["ai_coach"]:
 
