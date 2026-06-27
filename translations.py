@@ -71,6 +71,17 @@ translations = {
         "bronze": "🥉 Bronze Saver",
         "silver": "🥈 Silver Saver",
         "gold": "🏆 Gold Saver",
+        # EXPENSE PREDICTOR
+        "current_spending_summary": "Current Spending Summary",
+        "total_spent": "Total Spent",
+        "average_expense": "Average Expense",
+        "expected_transactions": "Expected remaining transactions this month",
+        "prediction": "Prediction",
+        "predicted_month_end": "Predicted Month-End Spending",
+        "stay_budget": "You are likely to stay within your budget.",
+        "exceed_budget": "You are likely to exceed your budget by",
+        "estimated_remaining": "Estimated remaining",
+        "insufficient_history": "Not enough transaction history to make a prediction.",
     },
     "Hindi": {
         # APP
@@ -144,6 +155,17 @@ translations = {
         "bronze": "🥉 कांस्य बचतकर्ता",
         "silver": "🥈 रजत बचतकर्ता",
         "gold": "🏆 स्वर्ण बचतकर्ता",
+        # EXPENSE PREDICTOR
+        "current_spending_summary": "वर्तमान खर्च सारांश",
+        "total_spent": "कुल खर्च",
+        "average_expense": "औसत खर्च",
+        "expected_transactions": "इस महीने के शेष अनुमानित लेन-देन",
+        "prediction": "पूर्वानुमान",
+        "predicted_month_end": "महीने के अंत का अनुमानित खर्च",
+        "stay_budget": "आप अपने बजट के भीतर रहने की संभावना रखते हैं।",
+        "exceed_budget": "आपके बजट से अधिक खर्च होने की संभावना है",
+        "estimated_remaining": "अनुमानित शेष राशि",
+        "insufficient_history": "पूर्वानुमान के लिए पर्याप्त लेन-देन उपलब्ध नहीं हैं।",
     },
     "Telugu": {
         # APP
@@ -217,5 +239,16 @@ translations = {
         "bronze": "🥉 బ్రాంజ్ సేవర్",
         "silver": "🥈 సిల్వర్ సేవర్",
         "gold": "🏆 గోల్డ్ సేవర్",
+        # EXPENSE PREDICTOR
+        "current_spending_summary": "ప్రస్తుత ఖర్చుల సారాంశం",
+        "total_spent": "మొత్తం ఖర్చు",
+        "average_expense": "సగటు ఖర్చు",
+        "expected_transactions": "ఈ నెలలో మిగిలిన అంచనా లావాదేవీలు",
+        "prediction": "అంచనా",
+        "predicted_month_end": "నెలాఖరు అంచనా ఖర్చు",
+        "stay_budget": "మీరు మీ బడ్జెట్‌లోనే ఉండే అవకాశముంది.",
+        "exceed_budget": "మీరు మీ బడ్జెట్‌ను మించే అవకాశం ఉంది",
+        "estimated_remaining": "అంచనా మిగులు",
+        "insufficient_history": "అంచనా వేయడానికి తగిన లావాదేవీలు లేవు.",
     },
 }
